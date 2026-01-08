@@ -1,1 +1,537 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>rimmine studio — Lookbook</title>
+  <meta name="description" content="rimmine studio lookbook — 컬러블록, 빅 타이포, 감각적인 카드 레이아웃" />
+  <style>
+    :root{
+      --ink:#111;
+      --paper:#fff7d6;
+      --orange:#f28a44;
+      --sky:#cfe9f3;
+      --red:#e4463d;
+      --pink:#f4bfd0;
+      --lav:#b7a9ff;
+      --line:rgba(0,0,0,.14);
+      --soft:rgba(255,255,255,.55);
+      --shadow: 0 18px 38px rgba(0,0,0,.18);
+      --shadow2: 0 12px 24px rgba(0,0,0,.14);
+      --r:18px;
+      --r2:26px;
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:#fff;
+      font-family: system-ui, -apple-system, "Apple SD Gothic Neo","Noto Sans KR", Segoe UI, Roboto, Arial, sans-serif;
+      overflow-x:hidden;
+    }
+    a{color:inherit; text-decoration:none}
+    button{font:inherit}
+
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    /* blob title */
+    .blob{
+      font-weight:900;
+      letter-spacing:-.02em;
+      line-height:.9;
+      font-size: clamp(52px, 9.8vw, 110px);
+      text-transform: lowercase;
+    }
+    .blob span{
+      display:inline-block;
+      transform: rotate(-1.3deg);
+      filter: drop-shadow(0 2px 0 rgba(0,0,0,.06));
+    }
+    .blob .w1{transform: rotate(-2deg) skewX(-3deg)}
+    .blob .w2{transform: rotate(1.5deg) skewX(2deg)}
+    .blob .w3{transform: rotate(-1deg) skewX(-2deg)}
+
+    /* header pills */
+    header{
+      position:sticky; top:0; z-index:50;
+      background: rgba(255,255,255,.55);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(0,0,0,.08);
+    }
+    .topbar{
+      height:58px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+    }
+    .pill{
+      border:1.5px solid var(--ink);
+      background:#fff;
+      border-radius:999px;
+      padding:9px 12px;
+      font-weight:800;
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow: 0 10px 18px rgba(0,0,0,.10);
+      transition:.2s ease;
+      white-space:nowrap;
+    }
+    .pill:hover{transform: translateY(-1px)}
+    .pill .dot{
+      width:8px; height:8px; border-radius:50%;
+      background:var(--orange);
+      box-shadow: 0 0 0 4px rgba(242,138,68,.22);
+      display:inline-block;
+    }
+    .navRight{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .ghost{background:transparent; box-shadow:none}
+
+    /* sections / color blocks */
+    section{position:relative}
+    .band{padding:60px 0}
+    .hero{
+      background: var(--sky);
+      color: var(--ink);
+      padding:68px 0 58px;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:-140px -140px auto -140px;
+      height:280px;
+      background:
+        radial-gradient(220px 160px at 20% 70%, rgba(255,255,255,.40), transparent 60%),
+        radial-gradient(340px 240px at 85% 30%, rgba(255,255,255,.30), transparent 65%);
+      transform: rotate(-2deg);
+      opacity:.95;
+      pointer-events:none;
+    }
+    .heroInner{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:22px;
+      align-items:end;
+    }
+    .heroCopy p{
+      margin:14px 0 0;
+      max-width: 68ch;
+      font-size:13px;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      opacity:.86;
+      line-height:1.5;
+    }
+    .heroBadge{
+      display:flex;
+      justify-content:flex-end;
+      align-items:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .miniTag{
+      border:1.5px solid var(--ink);
+      background: rgba(255,255,255,.78);
+      border-radius: 999px;
+      padding:10px 12px;
+      font-weight:800;
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      box-shadow: var(--shadow2);
+    }
+
+    /* side label like reference */
+    .sideLabel{
+      position:absolute;
+      left:10px;
+      top:50%;
+      transform: translateY(-50%);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      letter-spacing:.22em;
+      font-weight:900;
+      font-size:12px;
+      text-transform:uppercase;
+      opacity:.75;
+      user-select:none;
+    }
+
+    /* lookbook grid */
+    .lookBand{background: var(--paper)}
+    .toolbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .toolbar .kicker{
+      font-weight:900;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+    .toolbar .note{
+      font-size:12px;
+      color:rgba(0,0,0,.72);
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:16px;
+    }
+
+    .tile{
+      border:1.5px solid var(--ink);
+      border-radius: 22px;
+      background: rgba(255,255,255,.75);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      position:relative;
+      transform: rotate(-.35deg);
+      min-height: 240px;
+    }
+    .tile:nth-child(2n){transform: rotate(.25deg)}
+    .tile:nth-child(3n){transform: rotate(-.15deg)}
+    .tile .img{
+      height: 220px;
+      background:
+        radial-gradient(120px 90px at 28% 30%, rgba(255,255,255,.95), transparent 60%),
+        linear-gradient(135deg, rgba(0,0,0,.06), rgba(0,0,0,0)),
+        linear-gradient(135deg, rgba(242,138,68,.40), rgba(183,169,255,.58) 55%, rgba(255,255,255,.78));
+      border-bottom:1.5px solid var(--ink);
+      position:relative;
+    }
+    .tile .img::after{
+      content:"";
+      position:absolute; inset:18px;
+      border-radius: 18px;
+      border: 1.5px dashed rgba(0,0,0,.25);
+      background: rgba(255,255,255,.14);
+    }
+    .tile .body{
+      padding:12px 14px 14px;
+    }
+    .tile .title{
+      margin:0;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.10em;
+      font-size:12px;
+    }
+    .tile .meta{
+      margin:8px 0 0;
+      font-size:12px;
+      line-height:1.45;
+      color: rgba(0,0,0,.72);
+    }
+    .badge{
+      position:absolute;
+      left:14px; top:14px;
+      border:1.5px solid var(--ink);
+      background: #fff;
+      border-radius:999px;
+      padding:8px 10px;
+      font-weight:900;
+      font-size:11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      box-shadow: var(--shadow2);
+    }
+
+    .col-6{grid-column: span 6;}
+    .col-5{grid-column: span 5;}
+    .col-7{grid-column: span 7;}
+    .col-4{grid-column: span 4;}
+    .col-8{grid-column: span 8;}
+    .col-12{grid-column: span 12;}
+
+    /* quote band */
+    .quoteBand{background: var(--lav)}
+    .quoteBox{
+      border:1.5px solid var(--ink);
+      border-radius: 22px;
+      background: rgba(255,255,255,.70);
+      box-shadow: var(--shadow);
+      padding:18px;
+    }
+    .quoteBox .big{
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.03em;
+      font-size: clamp(18px, 2.5vw, 28px);
+      line-height:1.45;
+    }
+    .quoteBox u{
+      text-decoration-thickness: 3px;
+      text-underline-offset: 5px;
+    }
+    .quoteBox .small{
+      margin-top:10px;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      opacity:.85;
+    }
+
+    /* footer */
+    footer{background: var(--pink)}
+    .footerGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:16px;
+      align-items:start;
+    }
+    .footerCard{
+      border:1.5px solid var(--ink);
+      border-radius: 999px;
+      padding:16px 18px;
+      background: rgba(255,255,255,.45);
+      box-shadow: var(--shadow2);
+    }
+    .footerCard h3{
+      margin:0 0 6px;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+    .footerCard p{
+      margin:0;
+      font-size:12px;
+      line-height:1.5;
+      color: rgba(0,0,0,.75);
+    }
+    .footerBrand{
+      margin-top:26px;
+      text-align:center;
+      font-weight:900;
+      font-size: clamp(26px, 5vw, 44px);
+      letter-spacing:-.02em;
+    }
+    .footerButtons{
+      margin-top:16px;
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .bottomPills{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-top:18px;
+      padding-top:14px;
+      border-top:1px solid rgba(0,0,0,.18);
+      flex-wrap:wrap;
+    }
+
+    @media (max-width: 980px){
+      .heroInner{grid-template-columns: 1fr}
+      .heroBadge{justify-content:flex-start}
+      .footerGrid{grid-template-columns: 1fr}
+      .sideLabel{display:none}
+      .col-8,.col-7,.col-6,.col-5,.col-4{grid-column: span 12;}
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <div class="topbar">
+        <!-- 메인으로 돌아가기: 파일명만 네 프로젝트에 맞게 수정 -->
+        <a class="pill" href="index.html"><span class="dot"></span> HOME</a>
+        <div class="navRight">
+          <a class="pill ghost" href="#looks">LOOKS</a>
+          <a class="pill ghost" href="#note">NOTE</a>
+          <a class="pill" href="#contact">CONTACT</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="top" aria-label="Lookbook Hero">
+    <div class="wrap">
+      <div class="heroInner">
+        <div class="heroCopy">
+          <div class="blob">
+            <span class="w1">rimmine</span><br>
+            <span class="w2">lookbook</span>
+          </div>
+          <p>seasonal edits · soft silhouettes · playful basics — scroll for curated looks.</p>
+        </div>
+
+        <div class="heroBadge" aria-label="Quick links">
+          <a class="miniTag" href="#looks">VIEW LOOKS</a>
+          <a class="miniTag" href="#note">STYLING NOTE</a>
+          <a class="miniTag" href="index.html#shop">SHOP NOW</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOOKS GRID -->
+  <section class="band lookBand" id="looks" aria-label="Looks">
+    <div class="sideLabel">IN OUR LOOKS</div>
+    <div class="wrap">
+      <div class="toolbar">
+        <div class="kicker">CURATED LOOKS · 2026 DROP</div>
+        <div class="note">tap any look to imagine the styling (placeholder)</div>
+      </div>
+
+      <div class="grid" aria-label="Lookbook grid">
+        <article class="tile col-7">
+          <div class="badge">LOOK 01</div>
+          <div class="img" role="img" aria-label="Look image placeholder"></div>
+          <div class="body">
+            <p class="title">SOFT LAYERING</p>
+            <p class="meta">시어 탑 + 크림 미니스커트 + 롱 삭스 · 데일리 레이어</p>
+          </div>
+        </article>
+
+        <article class="tile col-5" style="background: rgba(255,255,255,.78);">
+          <div class="badge">LOOK 02</div>
+          <div class="img" role="img" aria-label="Look image placeholder" style="
+            background:
+              radial-gradient(120px 90px at 28% 30%, rgba(255,255,255,.95), transparent 60%),
+              linear-gradient(135deg, rgba(0,0,0,.06), rgba(0,0,0,0)),
+              linear-gradient(135deg, rgba(244,191,208,.70), rgba(255,255,255,.82) 55%, rgba(183,169,255,.55));
+          "></div>
+          <div class="body">
+            <p class="title">PINK ACCENT</p>
+            <p class="meta">톤온톤 핑크 포인트 · 미니멀 실루엣 유지</p>
+          </div>
+        </article>
+
+        <article class="tile col-4">
+          <div class="badge">LOOK 03</div>
+          <div class="img" role="img" aria-label="Look image placeholder" style="
+            background:
+              radial-gradient(120px 90px at 28% 30%, rgba(255,255,255,.95), transparent 60%),
+              linear-gradient(135deg, rgba(0,0,0,.06), rgba(0,0,0,0)),
+              linear-gradient(135deg, rgba(242,138,68,.50), rgba(255,255,255,.80) 55%, rgba(207,233,243,.70));
+          "></div>
+          <div class="body">
+            <p class="title">WARM DAY</p>
+            <p class="meta">오렌지 무드로 기분 전환 · 작은 컬러만</p>
+          </div>
+        </article>
+
+        <article class="tile col-8">
+          <div class="badge">LOOK 04</div>
+          <div class="img" role="img" aria-label="Look image placeholder" style="
+            background:
+              radial-gradient(140px 110px at 28% 30%, rgba(255,255,255,.95), transparent 60%),
+              linear-gradient(135deg, rgba(0,0,0,.06), rgba(0,0,0,0)),
+              linear-gradient(135deg, rgba(183,169,255,.70), rgba(255,255,255,.82) 55%, rgba(242,138,68,.35));
+          "></div>
+          <div class="body">
+            <p class="title">CLOUD VOLUME</p>
+            <p class="meta">볼륨 아우터 + 슬림 이너 · 대비로 균형 잡기</p>
+          </div>
+        </article>
+
+        <article class="tile col-6">
+          <div class="badge">LOOK 05</div>
+          <div class="img" role="img" aria-label="Look image placeholder" style="
+            background:
+              radial-gradient(120px 90px at 28% 30%, rgba(255,255,255,.95), transparent 60%),
+              linear-gradient(135deg, rgba(0,0,0,.06), rgba(0,0,0,0)),
+              linear-gradient(135deg, rgba(255,247,214,.95), rgba(255,255,255,.85) 55%, rgba(244,191,208,.65));
+          "></div>
+          <div class="body">
+            <p class="title">CREAM SET</p>
+            <p class="meta">크림 셋업 · 텍스처로만 포인트 주기</p>
+          </div>
+        </article>
+
+        <article class="tile col-6">
+          <div class="badge">LOOK 06</div>
+          <div class="img" role="img" aria-label="Look image placeholder" style="
+            background:
+              radial-gradient(120px 90px at 28% 30%, rgba(255,255,255,.95), transparent 60%),
+              linear-gradient(135deg, rgba(0,0,0,.06), rgba(0,0,0,0)),
+              linear-gradient(135deg, rgba(207,233,243,.95), rgba(255,255,255,.85) 55%, rgba(255,247,214,.85));
+          "></div>
+          <div class="body">
+            <p class="title">SKY BASICS</p>
+            <p class="meta">하늘색 베이직 · 데님/오프화이트로 연결</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- STYLING NOTE -->
+  <section class="band quoteBand" id="note" aria-label="Styling note">
+    <div class="sideLabel">IN OUR NOTES</div>
+    <div class="wrap">
+      <div class="quoteBox">
+        <div class="big">
+          KEEP IT <u>SIMPLE</u>, MAKE IT <u>SENSORY</u>. <br>
+          ONE STRONG <u>SILHOUETTE</u> + ONE SMALL <u>COLOR</u> = YOUR SIGNATURE.
+        </div>
+        <div class="small">styling note · rimmine studio</div>
+
+        <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="pill" href="index.html#shop">SHOP THE PIECES</a>
+          <a class="pill ghost" href="#top">BACK TO TOP</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="band" id="contact" aria-label="Footer">
+    <div class="wrap">
+      <div class="footerGrid">
+        <div class="footerCard">
+          <h3>Address</h3>
+          <p>Seoul, Korea<br>Lookbook updates monthly</p>
+        </div>
+        <div class="footerCard">
+          <h3>Social</h3>
+          <p>@rimmine.studio<br>studio@rimmine.example</p>
+        </div>
+        <div class="footerCard">
+          <h3>Inquiries</h3>
+          <p>press: press@rimmine.example<br>wholesale: wholesale@rimmine.example</p>
+        </div>
+      </div>
+
+      <div class="footerBrand">rimmine studio</div>
+
+      <div class="footerButtons">
+        <a class="pill" href="index.html">HOME</a>
+        <a class="pill" href="index.html#shop">SHOP</a>
+        <a class="pill" href="#top">TOP</a>
+      </div>
+
+      <div class="bottomPills">
+        <div style="font-size:12px; letter-spacing:.12em; text-transform:uppercase; font-weight:900;">
+          © 2026 RIMMINE STUDIO, LLC
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="pill ghost" href="#">PRIVACY POLICY</a>
+          <a class="pill ghost" href="#">TERMS</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
 
